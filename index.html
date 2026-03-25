@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+<div class="shooting-star"></div>
+<div class="shooting-star"></div>
+<div class="shooting-star"></div>
+<div class="container">
+
+    <!-- LEFT SIDE -->
+    <div class="left">
+        <h1>Welcome</h1>
+        <p>Aligning minds like stars — perfectly placed, perfectly planned.</p>
+    </div>
+
+    <!-- RIGHT SIDE -->
+    <div class="right">
+        <div class="box">
+
+            <h2>Login</h2>
+
+            <div class="input-group">
+                <input type="text" id="username" placeholder="Username or Email" oninput="clearMsg()">
+            </div>
+
+            <div class="input-group">
+                <input type="password" id="password" placeholder="Password" oninput="clearMsg()">
+            </div>
+
+            <button onclick="login()">Login</button>
+
+            <div class="links">
+                <span onclick="goForgot()">Forgot Password</span>
+                <span onclick="goRegister()">Create Account</span>
+            </div>
+
+            <p id="msg"></p>
+
+        </div>
+    </div>
+
+</div>
+
+<script>
+
+function clearMsg(){
+    document.getElementById("msg").innerText = ""
+}
+
+function goForgot(){
+    window.location.href = "forgot.html"
+}
+
+function goRegister(){
+    window.location.href = "register.html"
+}
+
+function login(){
+
+let username = document.getElementById("username").value
+let password = document.getElementById("password").value
+let msgBox = document.getElementById("msg")
+
+if(username.trim() === "" || password.trim() === ""){
+    msgBox.innerText = "All fields are required ❌"
+    msgBox.style.color = "red"
+    return
+}
+
+msgBox.innerText = "Checking..."
+msgBox.style.color = "white"
+
+fetch("https://exam-seating-arrangement-k7ln.onrender.com/login",{
+method:"POST",
+headers:{"Content-Type":"application/json"},
+body: JSON.stringify({username, password})
+})
+.then(res=>res.json())
+.then(data=>{
+
+    msgBox.innerText = data.msg
+
+    if(data.success){
+        msgBox.style.color = "lightgreen"
+
+        localStorage.setItem("user", username)
+
+        setTimeout(()=>{
+            window.location.href = "dashboard.html"
+        }, 1000)
+
+    } else {
+        msgBox.style.color = "red"
+    }
+
+})
+.catch(()=>{
+    msgBox.innerText = "Server error ❌"
+    msgBox.style.color = "red"
+})
+
+}
+
+</script>
+
+</body>
+</html>
