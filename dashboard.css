@@ -198,9 +198,3 @@ button {
     0%, 100% { opacity: 0.8; }
     50% { opacity: 0.3; }
 }
-
-/* 🌠 STAR MOVEMENT */
-@keyframes moveStars {
-    from { transform: translateY(0); }
-    to { transform: translateY(-1500px); }
-}
