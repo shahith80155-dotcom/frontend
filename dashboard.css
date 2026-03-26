@@ -166,3 +166,41 @@ button {
 #msg {
     margin-top: 10px;
 }
+.shooting-star {
+    position: fixed;
+    top: -100px;
+    width: 2px;
+    height: 80px;
+    background: linear-gradient(white, transparent);
+    opacity: 0;
+    animation: shoot 6s linear infinite;
+}
+
+.shooting-star:nth-child(1) {
+    left: 20%;
+    animation-delay: 2s;
+}
+
+.shooting-star:nth-child(2) {
+    left: 50%;
+    animation-delay: 5s;
+}
+
+.shooting-star:nth-child(3) {
+    left: 80%;
+    animation-delay: 8s;
+}
+
+@keyframes shoot {
+    0% {
+        transform: translateY(0) translateX(0) rotate(45deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(800px) translateX(300px) rotate(45deg);
+        opacity: 0;
+    }
+}
