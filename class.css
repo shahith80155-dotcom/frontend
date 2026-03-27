@@ -1,12 +1,13 @@
+/* 🌌 BODY */
 body {
     margin: 0;
-    font-family: Arial;
+    font-family: Arial, sans-serif;
     background: radial-gradient(circle at top left, #1a0033, #000);
     color: white;
     overflow-x: hidden;
 }
 
-/* ⭐ STARS */
+/* ⭐ STAR BACKGROUND */
 body::before,
 body::after {
     content: "";
@@ -16,16 +17,19 @@ body::after {
     background-image:
         radial-gradient(1px 1px at 10% 20%, white, transparent),
         radial-gradient(1px 1px at 50% 50%, #aaa, transparent),
-        radial-gradient(1px 1px at 80% 10%, #fff, transparent);
-    animation: moveStars 200s linear infinite;
+        radial-gradient(1px 1px at 80% 10%, #fff, transparent),
+        radial-gradient(1px 1px at 30% 80%, #ccc, transparent);
+    animation: moveStars 180s linear infinite;
     z-index: -2;
 }
 
 body::after {
     animation-duration: 120s;
+    opacity: 0.7;
     z-index: -1;
 }
 
+/* ⭐ ONLY DOWNWARD (FIXED) */
 @keyframes moveStars {
     from { transform: translateY(0); }
     to { transform: translateY(1200px); }
@@ -36,7 +40,7 @@ body::after {
     content: "";
     position: fixed;
     top: -100px;
-    left: 60%;
+    left: 70%;
     width: 2px;
     height: 100px;
     background: linear-gradient(white, transparent);
@@ -44,22 +48,18 @@ body::after {
 }
 
 @keyframes shoot {
-    0% { transform: translateY(-100px) rotate(45deg); opacity: 0; }
+    0% {
+        transform: translateY(-100px) rotate(45deg);
+        opacity: 0;
+    }
     10% { opacity: 1; }
-    100% { transform: translateY(800px) rotate(45deg); opacity: 0; }
+    100% {
+        transform: translateY(800px) rotate(45deg);
+        opacity: 0;
+    }
 }
 
-/* REMOVE ARROWS */
-input[type="number"]::-webkit-inner-spin-button,
-input[type="number"]::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-}
-
-input[type="number"] {
-    -moz-appearance: textfield;
-}
-
-/* CONTAINER */
+/* 📦 CONTAINER */
 .classroom-container {
     max-width: 420px;
     margin: 50px auto;
@@ -71,10 +71,11 @@ input[type="number"] {
     text-align: center;
 }
 
-/* TEXT */
+/* 📝 TEXT */
 h1 {
     color: #e0b3ff;
     text-shadow: 0 0 20px #a020f0;
+    margin-bottom: 5px;
 }
 
 .subtitle {
@@ -82,7 +83,17 @@ h1 {
     margin-bottom: 20px;
 }
 
-/* INPUT */
+/* 🔢 REMOVE NUMBER ARROWS */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+/* ✏️ INPUT */
 input {
     width: 90%;
     padding: 12px;
@@ -91,22 +102,21 @@ input {
     border: none;
     background: rgba(255,255,255,0.08);
     color: white;
+    font-size: 14px;
+    transition: 0.3s;
 }
 
 input:focus {
     outline: none;
+    background: rgba(255,255,255,0.12);
     box-shadow: 0 0 10px #a020f0;
 }
 
-/* MODE */
+/* 🔘 MODE SELECT */
 .mode {
     display: flex;
     gap: 10px;
     margin: 20px 0;
-}
-
-.radio-card input {
-    display: none;
 }
 
 .radio-card {
@@ -115,25 +125,65 @@ input:focus {
     border-radius: 15px;
     background: rgba(255,255,255,0.05);
     cursor: pointer;
+    transition: 0.3s;
 }
 
+.radio-card input {
+    display: none;
+}
+
+.radio-card span {
+    color: #aaa;
+    transition: 0.3s;
+}
+
+/* hover */
+.radio-card:hover {
+    background: rgba(255,255,255,0.1);
+}
+
+/* 🔥 SELECTED MODE */
 .radio-card input:checked + span {
+    display: inline-block;
+    width: 100%;
     color: white;
     font-weight: bold;
+    background: linear-gradient(90deg, #a020f0, #ff00cc);
+    padding: 8px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px #a020f0;
 }
 
-/* BUTTON */
+/* 🔘 BUTTON */
 button {
-    padding: 10px 20px;
+    padding: 8px 16px;
     margin: 10px;
     border-radius: 20px;
     border: none;
     cursor: pointer;
+
+    font-size: 13px;
+    font-weight: 500;
+
     background: linear-gradient(90deg, #a020f0, #ff00cc);
     color: white;
+
+    box-shadow: 0 0 12px #a020f0;
+    transition: 0.3s;
 }
 
-/* ROOM */
+button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px #ff00cc;
+}
+
+/* 🔴 DANGER BUTTON */
+button.danger {
+    background: linear-gradient(90deg, #ff0033, #ff4d4d);
+    box-shadow: 0 0 12px red;
+}
+
+/* 🧱 ROOM BOX */
 .room-box {
     margin-top: 15px;
     padding: 15px;
@@ -141,11 +191,7 @@ button {
     background: rgba(255,255,255,0.05);
 }
 
-/* DEPT CHIPS */
-.chip input {
-    display: none;
-}
-
+/* 🏷️ DEPARTMENT CHIPS */
 .dept {
     display: flex;
     justify-content: space-around;
@@ -153,18 +199,41 @@ button {
 }
 
 .chip {
-    padding: 6px 10px;
-    border-radius: 15px;
+    padding: 6px 12px;
+    border-radius: 20px;
     background: rgba(255,255,255,0.08);
     cursor: pointer;
+    transition: 0.3s;
+    color: #bbb;
 }
 
+.chip input {
+    display: none;
+}
+
+/* hover */
+.chip:hover {
+    background: rgba(255,255,255,0.15);
+}
+
+/* 🔥 SELECTED CHIP */
 .chip input:checked + span {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 20px;
     color: white;
     font-weight: bold;
+    background: linear-gradient(90deg, #a020f0, #ff00cc);
+    box-shadow: 0 0 10px #a020f0;
 }
 
-/* MESSAGE */
+/* 📩 MESSAGE */
 #msg {
     margin-top: 10px;
+    font-size: 14px;
+}
+
+/* ✨ GLOBAL SMOOTHNESS */
+* {
+    transition: all 0.25s ease;
 }
