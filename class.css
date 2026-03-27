@@ -25,11 +25,11 @@ body::after {
 
 body::after {
     animation-duration: 120s;
-    opacity: 0.7;
+    opacity: 0.6;
     z-index: -1;
 }
 
-/* ⭐ ONLY DOWNWARD (FIXED) */
+/* ⭐ DOWNWARD ONLY */
 @keyframes moveStars {
     from { transform: translateY(0); }
     to { transform: translateY(1200px); }
@@ -48,15 +48,9 @@ body::after {
 }
 
 @keyframes shoot {
-    0% {
-        transform: translateY(-100px) rotate(45deg);
-        opacity: 0;
-    }
+    0% { transform: translateY(-100px) rotate(45deg); opacity: 0; }
     10% { opacity: 1; }
-    100% {
-        transform: translateY(800px) rotate(45deg);
-        opacity: 0;
-    }
+    100% { transform: translateY(800px) rotate(45deg); opacity: 0; }
 }
 
 /* 📦 CONTAINER */
@@ -103,7 +97,6 @@ input {
     background: rgba(255,255,255,0.08);
     color: white;
     font-size: 14px;
-    transition: 0.3s;
 }
 
 input:focus {
@@ -119,12 +112,14 @@ input:focus {
     margin: 20px 0;
 }
 
+/* RADIO CARD */
 .radio-card {
     flex: 1;
-    padding: 12px;
+    padding: 14px;
     border-radius: 15px;
     background: rgba(255,255,255,0.05);
     cursor: pointer;
+    text-align: center;
     transition: 0.3s;
 }
 
@@ -134,7 +129,7 @@ input:focus {
 
 .radio-card span {
     color: #aaa;
-    transition: 0.3s;
+    font-size: 14px;
 }
 
 /* hover */
@@ -142,22 +137,22 @@ input:focus {
     background: rgba(255,255,255,0.1);
 }
 
-/* 🔥 SELECTED MODE */
-.radio-card input:checked + span {
-    display: inline-block;
-    width: 100%;
-    color: white;
-    font-weight: bold;
+/* 🔥 FULL BOX SELECTED */
+.radio-card:has(input:checked) {
     background: linear-gradient(90deg, #a020f0, #ff00cc);
-    padding: 8px;
-    border-radius: 10px;
-    box-shadow: 0 0 15px #a020f0;
+    box-shadow: 0 0 20px #a020f0;
+    transform: scale(1.05);
+}
+
+.radio-card input:checked + span {
+    color: white;
+    font-weight: 600;
 }
 
 /* 🔘 BUTTON */
 button {
     padding: 8px 16px;
-    margin: 10px;
+    margin: 8px;
     border-radius: 20px;
     border: none;
     cursor: pointer;
@@ -177,7 +172,7 @@ button:hover {
     box-shadow: 0 0 20px #ff00cc;
 }
 
-/* 🔴 DANGER BUTTON */
+/* 🔴 DANGER */
 button.danger {
     background: linear-gradient(90deg, #ff0033, #ff4d4d);
     box-shadow: 0 0 12px red;
@@ -191,10 +186,12 @@ button.danger {
     background: rgba(255,255,255,0.05);
 }
 
-/* 🏷️ DEPARTMENT CHIPS */
+/* 🏷️ DEPT CHIPS */
 .dept {
     display: flex;
-    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
     margin-top: 10px;
 }
 
@@ -203,7 +200,6 @@ button.danger {
     border-radius: 20px;
     background: rgba(255,255,255,0.08);
     cursor: pointer;
-    transition: 0.3s;
     color: #bbb;
 }
 
@@ -218,12 +214,11 @@ button.danger {
 
 /* 🔥 SELECTED CHIP */
 .chip input:checked + span {
-    display: inline-block;
-    padding: 5px 10px;
-    border-radius: 20px;
     color: white;
     font-weight: bold;
     background: linear-gradient(90deg, #a020f0, #ff00cc);
+    padding: 5px 10px;
+    border-radius: 20px;
     box-shadow: 0 0 10px #a020f0;
 }
 
@@ -233,7 +228,7 @@ button.danger {
     font-size: 14px;
 }
 
-/* ✨ GLOBAL SMOOTHNESS */
+/* ✨ SMOOTH */
 * {
     transition: all 0.25s ease;
 }
