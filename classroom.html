@@ -12,10 +12,10 @@
     <h1>Classroom Setup 🚀</h1>
     <p class="subtitle">Configure rooms and seating</p>
 
-    <input type="number" id="roomCount" placeholder="Number of Classrooms">
-    <input type="number" id="bench" placeholder="Students per Bench">
+    <!-- ✅ ONLY POSITIVE -->
+    <input type="number" id="roomCount" placeholder="Number of Classrooms" min="1">
+    <input type="number" id="bench" placeholder="Students per Bench" min="1">
 
-    <!-- 🔥 MODERN MODE SELECT -->
     <div class="mode">
         <label class="radio-card">
             <input type="radio" name="mode" value="normal" checked>
@@ -55,9 +55,16 @@ function deleteAllClassrooms(){
 }
 
 function generateRooms(){
+
     let count = document.getElementById("roomCount").value
     let container = document.getElementById("rooms")
     let mode = document.querySelector("input[name='mode']:checked").value
+
+    // ✅ VALIDATE POSITIVE
+    if(!count || count <= 0){
+        alert("Enter valid classroom count ❌")
+        return
+    }
 
     container.innerHTML = ""
 
@@ -67,8 +74,10 @@ function generateRooms(){
             <h3>Room ${i}</h3>
 
             <input type="text" id="name${i}" placeholder="Room Name">
-            <input type="number" id="rows${i}" placeholder="Rows">
-            <input type="number" id="cols${i}" placeholder="Columns">
+
+            <!-- ✅ ONLY POSITIVE -->
+            <input type="number" id="rows${i}" placeholder="Rows" min="1">
+            <input type="number" id="cols${i}" placeholder="Columns" min="1">
 
             ${mode === "dept" ? `
             <div class="dept">
@@ -95,34 +104,42 @@ function generateRooms(){
 }
 
 function saveDetails(){
+
     let count = document.getElementById("roomCount").value
     let bench = document.getElementById("bench").value
     let msg = document.getElementById("msg")
     let mode = document.querySelector("input[name='mode']:checked").value
 
-    if(!count || !bench){
-        msg.innerText = "Fill all fields ❌"
+    // ✅ VALIDATE POSITIVE
+    if(!count || !bench || count <= 0 || bench <= 0){
+        msg.innerText = "Enter valid positive values ❌"
+        msg.style.color = "red"
         return
     }
 
     let rooms = []
 
     for(let i=1;i<=count;i++){
+
         let rows = document.getElementById("rows"+i).value
         let cols = document.getElementById("cols"+i).value
 
-        if(!rows || !cols){
-            msg.innerText = "Fill all room details ❌"
+        // ✅ VALIDATE POSITIVE
+        if(!rows || !cols || rows <= 0 || cols <= 0){
+            msg.innerText = "Rows & Columns must be > 0 ❌"
+            msg.style.color = "red"
             return
         }
 
         let allowed_depts = []
+
         if(mode === "dept"){
             document.querySelectorAll(".dept"+i+":checked")
             .forEach(cb => allowed_depts.push(cb.value))
 
             if(allowed_depts.length === 0){
                 msg.innerText = "Select departments ❌"
+                msg.style.color = "red"
                 return
             }
         }
@@ -143,6 +160,7 @@ function saveDetails(){
     .then(res=>res.text())
     .then(data=>{
         msg.innerText = data
+        msg.style.color = "green"
     })
 }
 </script>
