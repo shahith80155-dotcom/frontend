@@ -1,0 +1,146 @@
+body {
+    margin: 0;
+    font-family: Arial;
+    background: radial-gradient(circle at top left, #1a0033, #000);
+    color: white;
+    overflow-x: hidden;
+}
+
+/* ⭐ STARS */
+body::before {
+    content: "";
+    position: fixed;
+    width: 200%;
+    height: 200%;
+    background-image:
+        radial-gradient(1px 1px at 10% 20%, white, transparent),
+        radial-gradient(1px 1px at 50% 50%, #aaa, transparent),
+        radial-gradient(1px 1px at 80% 10%, #fff, transparent);
+    animation: moveStars 200s linear infinite;
+    z-index: -2;
+}
+
+body::after {
+    content: "";
+    position: fixed;
+    width: 200%;
+    height: 200%;
+    background-image:
+        radial-gradient(2px 2px at 30% 60%, white, transparent),
+        radial-gradient(2px 2px at 70% 30%, #ccc, transparent);
+    animation: moveStars 120s linear infinite;
+    z-index: -1;
+}
+
+@keyframes moveStars {
+    from { transform: translateY(0); }
+    to { transform: translateY(1000px); } /* DOWNWARD */
+}
+
+/* 🚀 SHOOTING STARS */
+.shooting-stars::before,
+.shooting-stars::after {
+    content: "";
+    position: fixed;
+    top: -100px;
+    width: 2px;
+    height: 100px;
+    background: linear-gradient(white, transparent);
+    animation: shoot 5s linear infinite;
+}
+
+.shooting-stars::before { left: 25%; }
+.shooting-stars::after { left: 75%; animation-delay: 2s; }
+
+@keyframes shoot {
+    0% { transform: translateY(-100px) rotate(45deg); opacity: 0; }
+    10% { opacity: 1; }
+    100% { transform: translateY(800px) rotate(45deg); opacity: 0; }
+}
+
+/* CONTAINER */
+.classroom-container {
+    max-width: 420px;
+    margin: 50px auto;
+    padding: 30px;
+    border-radius: 20px;
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(15px);
+    box-shadow: 0 0 30px rgba(160,32,240,0.4);
+    text-align: center;
+}
+
+/* TEXT */
+h1 {
+    margin-bottom: 5px;
+    color: #e0b3ff;
+    text-shadow: 0 0 20px #a020f0;
+}
+
+.subtitle {
+    color: #aaa;
+    margin-bottom: 20px;
+}
+
+/* INPUT */
+input {
+    width: 90%;
+    padding: 10px;
+    margin: 8px 0;
+    border-radius: 10px;
+    border: none;
+    background: rgba(255,255,255,0.08);
+    color: white;
+}
+
+/* MODE */
+.mode {
+    display: flex;
+    justify-content: space-around;
+    margin: 15px 0;
+}
+
+/* BUTTON */
+button {
+    padding: 10px 20px;
+    margin: 10px 5px;
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+    background: linear-gradient(90deg, #a020f0, #ff00cc);
+    color: white;
+    box-shadow: 0 0 15px #a020f0;
+}
+
+button:hover {
+    transform: scale(1.05);
+}
+
+/* VARIANTS */
+.primary {
+    background: linear-gradient(90deg, #6a5cff, #c84bff);
+}
+
+.danger {
+    background: rgba(255,0,0,0.7);
+}
+
+/* ROOM BOX */
+.room-box {
+    margin-top: 15px;
+    padding: 15px;
+    border-radius: 12px;
+    background: rgba(255,255,255,0.05);
+}
+
+/* DEPT */
+.dept {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 10px;
+}
+
+/* MESSAGE */
+#msg {
+    margin-top: 10px;
+}
