@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Classroom Details</title>
+    <title>Classroom Setup</title>
     <link rel="stylesheet" href="class.css">
 </head>
 
@@ -15,9 +15,17 @@
     <input type="number" id="roomCount" placeholder="Number of Classrooms">
     <input type="number" id="bench" placeholder="Students per Bench">
 
+    <!-- 🔥 MODERN MODE SELECT -->
     <div class="mode">
-        <label><input type="radio" name="mode" value="normal" checked> Normal</label>
-        <label><input type="radio" name="mode" value="dept"> Department</label>
+        <label class="radio-card">
+            <input type="radio" name="mode" value="normal" checked>
+            <span>🚀 Normal</span>
+        </label>
+
+        <label class="radio-card">
+            <input type="radio" name="mode" value="dept">
+            <span>🏫 Department</span>
+        </label>
     </div>
 
     <button onclick="generateRooms()">Generate</button>
@@ -57,16 +65,29 @@ function generateRooms(){
         container.innerHTML += `
         <div class="room-box">
             <h3>Room ${i}</h3>
+
             <input type="text" id="name${i}" placeholder="Room Name">
             <input type="number" id="rows${i}" placeholder="Rows">
             <input type="number" id="cols${i}" placeholder="Columns">
 
             ${mode === "dept" ? `
             <div class="dept">
-                <label><input type="checkbox" class="dept${i}" value="CSE"> CSE</label>
-                <label><input type="checkbox" class="dept${i}" value="IT"> IT</label>
-                <label><input type="checkbox" class="dept${i}" value="ECE"> ECE</label>
-                <label><input type="checkbox" class="dept${i}" value="MECH"> MECH</label>
+                <label class="chip">
+                    <input type="checkbox" class="dept${i}" value="CSE">
+                    <span>CSE</span>
+                </label>
+                <label class="chip">
+                    <input type="checkbox" class="dept${i}" value="IT">
+                    <span>IT</span>
+                </label>
+                <label class="chip">
+                    <input type="checkbox" class="dept${i}" value="ECE">
+                    <span>ECE</span>
+                </label>
+                <label class="chip">
+                    <input type="checkbox" class="dept${i}" value="MECH">
+                    <span>MECH</span>
+                </label>
             </div>
             ` : ""}
         </div>`

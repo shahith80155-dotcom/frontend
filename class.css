@@ -7,7 +7,8 @@ body {
 }
 
 /* ⭐ STARS */
-body::before {
+body::before,
+body::after {
     content: "";
     position: fixed;
     width: 200%;
@@ -21,41 +22,41 @@ body::before {
 }
 
 body::after {
-    content: "";
-    position: fixed;
-    width: 200%;
-    height: 200%;
-    background-image:
-        radial-gradient(2px 2px at 30% 60%, white, transparent),
-        radial-gradient(2px 2px at 70% 30%, #ccc, transparent);
-    animation: moveStars 120s linear infinite;
+    animation-duration: 120s;
     z-index: -1;
 }
 
 @keyframes moveStars {
     from { transform: translateY(0); }
-    to { transform: translateY(1000px); } /* DOWNWARD */
+    to { transform: translateY(1200px); }
 }
 
-/* 🚀 SHOOTING STARS */
-.shooting-stars::before,
-.shooting-stars::after {
+/* 🚀 SHOOTING STAR */
+.shooting-stars::before {
     content: "";
     position: fixed;
     top: -100px;
+    left: 60%;
     width: 2px;
     height: 100px;
     background: linear-gradient(white, transparent);
-    animation: shoot 5s linear infinite;
+    animation: shoot 6s linear infinite;
 }
-
-.shooting-stars::before { left: 25%; }
-.shooting-stars::after { left: 75%; animation-delay: 2s; }
 
 @keyframes shoot {
     0% { transform: translateY(-100px) rotate(45deg); opacity: 0; }
     10% { opacity: 1; }
     100% { transform: translateY(800px) rotate(45deg); opacity: 0; }
+}
+
+/* REMOVE ARROWS */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield;
 }
 
 /* CONTAINER */
@@ -72,7 +73,6 @@ body::after {
 
 /* TEXT */
 h1 {
-    margin-bottom: 5px;
     color: #e0b3ff;
     text-shadow: 0 0 20px #a020f0;
 }
@@ -85,47 +85,55 @@ h1 {
 /* INPUT */
 input {
     width: 90%;
-    padding: 10px;
-    margin: 8px 0;
-    border-radius: 10px;
+    padding: 12px;
+    margin: 10px 0;
+    border-radius: 12px;
     border: none;
     background: rgba(255,255,255,0.08);
     color: white;
 }
 
+input:focus {
+    outline: none;
+    box-shadow: 0 0 10px #a020f0;
+}
+
 /* MODE */
 .mode {
     display: flex;
-    justify-content: space-around;
-    margin: 15px 0;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.radio-card input {
+    display: none;
+}
+
+.radio-card {
+    flex: 1;
+    padding: 12px;
+    border-radius: 15px;
+    background: rgba(255,255,255,0.05);
+    cursor: pointer;
+}
+
+.radio-card input:checked + span {
+    color: white;
+    font-weight: bold;
 }
 
 /* BUTTON */
 button {
     padding: 10px 20px;
-    margin: 10px 5px;
+    margin: 10px;
     border-radius: 20px;
     border: none;
     cursor: pointer;
     background: linear-gradient(90deg, #a020f0, #ff00cc);
     color: white;
-    box-shadow: 0 0 15px #a020f0;
 }
 
-button:hover {
-    transform: scale(1.05);
-}
-
-/* VARIANTS */
-.primary {
-    background: linear-gradient(90deg, #6a5cff, #c84bff);
-}
-
-.danger {
-    background: rgba(255,0,0,0.7);
-}
-
-/* ROOM BOX */
+/* ROOM */
 .room-box {
     margin-top: 15px;
     padding: 15px;
@@ -133,11 +141,27 @@ button:hover {
     background: rgba(255,255,255,0.05);
 }
 
-/* DEPT */
+/* DEPT CHIPS */
+.chip input {
+    display: none;
+}
+
 .dept {
     display: flex;
     justify-content: space-around;
     margin-top: 10px;
+}
+
+.chip {
+    padding: 6px 10px;
+    border-radius: 15px;
+    background: rgba(255,255,255,0.08);
+    cursor: pointer;
+}
+
+.chip input:checked + span {
+    color: white;
+    font-weight: bold;
 }
 
 /* MESSAGE */
