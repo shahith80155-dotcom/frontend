@@ -3,7 +3,7 @@
 <head>
 <title>Upload Student List</title>
 
-<link rel="stylesheet" href="student.css">
+<link rel="stylesheet" href="student.css"
 </head>
 
 <body>
@@ -21,7 +21,6 @@
 <option>CIVIL</option>
 </select>
 
-<!-- FILE -->
 <label class="file-upload">
     <input type="file" id="regularFile" accept=".csv"
            onchange="validateFile(this,'file1')">
@@ -66,7 +65,7 @@
 
 </div>
 
-<!-- 🔥 SAMPLE POPUP -->
+<!-- SAMPLE -->
 <div id="sampleBox" class="sample-box">
     <div class="sample-content">
         <h3>Sample CSV Format</h3>
@@ -84,7 +83,6 @@ Kiran Kumar,1003,CS103,CSE,regular
 
 <script>
 
-/* VALIDATE CSV */
 function validateFile(input,id){
     let file = input.files[0]
 
@@ -99,13 +97,11 @@ function validateFile(input,id){
     }
 }
 
-/* SHOW ARREAR */
 function showArrear(val){
     document.getElementById("arrearSection").style.display =
         val==="yes" ? "block":"none"
 }
 
-/* SAMPLE POPUP */
 function showSample(){
     document.getElementById("sampleBox").style.display="flex"
 }
@@ -114,7 +110,6 @@ function closeSample(){
     document.getElementById("sampleBox").style.display="none"
 }
 
-/* DELETE */
 function deleteAllStudents(){
     fetch("https://exam-seating-arrangement-k7ln.onrender.com/delete-all-students",{
         method:"DELETE"
@@ -126,7 +121,6 @@ function deleteAllStudents(){
     })
 }
 
-/* UPLOAD */
 function uploadStudents(){
 
 let dept=document.getElementById("dept").value
@@ -158,7 +152,6 @@ fetch("https://exam-seating-arrangement-k7ln.onrender.com/upload-students",{
 })
 }
 
-/* BACK */
 function goBack(){
     window.location.href="dashboard.html"
 }
