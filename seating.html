@@ -37,17 +37,20 @@
 
     <p id="msg"></p>
 
+    <!-- ✅ BACK BUTTON -->
+    <button class="back-btn" onclick="goDashboard()">← Back to Dashboard</button>
+
 </div>
 
 <script>
 
-// ✅ SHOW / HIDE EXTRA INPUTS
+// SHOW / HIDE EXTRA INPUTS
 document.getElementById("extraRoom").addEventListener("change", function () {
     let box = document.getElementById("extraInputs")
     box.style.display = this.checked ? "flex" : "none"
 })
 
-// ✅ GENERATE FUNCTION
+// GENERATE FUNCTION
 function generateSeating() {
 
     let allowExtra = document.getElementById("extraRoom").checked
@@ -95,9 +98,14 @@ function generateSeating() {
     })
 }
 
-// ✅ VIEW PAGE NAVIGATION
+// VIEW PAGE
 function goToView(){
     window.location.href = "view.html"
+}
+
+// BACK TO DASHBOARD
+function goDashboard(){
+    window.location.href = "dashboard.html"
 }
 
 </script>
