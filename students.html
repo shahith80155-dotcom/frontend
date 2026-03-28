@@ -3,13 +3,15 @@
 <head>
 <title>Upload Student List</title>
 
-<link rel="stylesheet" href="student.css"
+<link rel="stylesheet" href="student.css">
 </head>
 
 <body>
+
 <div class="shooting-star"></div>
 <div class="shooting-star"></div>
 <div class="shooting-star"></div>
+
 <div class="students-container">
 
 <h2>Upload Students 🚀</h2>
@@ -85,6 +87,7 @@ Kiran Kumar,1003,CS103,CSE,regular
 
 <script>
 
+/* FILE VALIDATION */
 function validateFile(input,id){
     let file = input.files[0]
 
@@ -99,35 +102,43 @@ function validateFile(input,id){
     }
 }
 
+/* SHOW ARREAR */
 function showArrear(val){
     document.getElementById("arrearSection").style.display =
         val==="yes" ? "block":"none"
 }
 
+/* SAMPLE POPUP */
 function showSample(){
     document.getElementById("sampleBox").style.display="flex"
 }
-
 function closeSample(){
     document.getElementById("sampleBox").style.display="none"
 }
 
+/* DELETE */
 function deleteAllStudents(){
     fetch("https://exam-seating-arrangement-k7ln.onrender.com/delete-all-students",{
         method:"DELETE"
     })
     .then(res=>res.text())
     .then(msg=>{
-        document.getElementById("msg").innerText=msg
+        let el = document.getElementById("msg")
+        el.innerText=msg
         setTimeout(()=>location.reload(),1000)
     })
 }
 
+/* 🔥 IMPROVED UPLOAD */
 function uploadStudents(){
 
 let dept=document.getElementById("dept").value
 let file=document.getElementById("regularFile").files[0]
+let arrearFile=document.getElementById("arrearFile").files[0]
+let arrearDept=document.getElementById("arrearDept").value
+
 let msg=document.getElementById("msg")
+let btn=document.querySelector(".upload-btn")
 
 if(dept==="" || !file){
     msg.innerText="Select department & file ❌"
@@ -135,9 +146,21 @@ if(dept==="" || !file){
     return
 }
 
+/* 🔄 LOADING STATE */
+btn.disabled = true
+btn.innerText = "Uploading..."
+msg.innerText="Uploading..."
+msg.style.color="white"
+
 let formData=new FormData()
 formData.append("dept",dept)
 formData.append("regularFile",file)
+
+/* add arrear if exists */
+if(arrearFile){
+    formData.append("arrearFile",arrearFile)
+    formData.append("arrearDept",arrearDept)
+}
 
 fetch("https://exam-seating-arrangement-k7ln.onrender.com/upload-students",{
     method:"POST",
@@ -145,15 +168,41 @@ fetch("https://exam-seating-arrangement-k7ln.onrender.com/upload-students",{
 })
 .then(res=>res.text())
 .then(data=>{
+
     msg.innerText=data
-    msg.style.color="green"
+    msg.style.color="lightgreen"
+
+    /* ✅ RESET FILES */
+    document.getElementById("regularFile").value=""
+    document.getElementById("file1").innerText="No file chosen"
+
+    document.getElementById("arrearFile").value=""
+    document.getElementById("file2").innerText="No file chosen"
+
+    /* ✅ RESET BUTTON */
+    btn.disabled = false
+    btn.innerText = "Upload Students"
+
+    /* ✅ AUTO CLEAR MESSAGE */
+    setTimeout(()=>{
+        msg.innerText=""
+    },3000)
+
 })
 .catch(()=>{
     msg.innerText="Upload failed ❌"
     msg.style.color="red"
+
+    btn.disabled = false
+    btn.innerText = "Upload Students"
+
+    setTimeout(()=>{
+        msg.innerText=""
+    },3000)
 })
 }
 
+/* BACK */
 function goBack(){
     window.location.href="dashboard.html"
 }

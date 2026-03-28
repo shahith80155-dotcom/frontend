@@ -9,12 +9,12 @@
 <div class="shooting-star"></div>
 <div class="shooting-star"></div>
 <div class="shooting-star"></div>
+
 <div class="classroom-container">
 
     <h1>Classroom Setup 🚀</h1>
     <p class="subtitle">Configure rooms and seating</p>
 
-    <!-- ✅ ONLY POSITIVE -->
     <input type="number" id="roomCount" placeholder="Number of Classrooms" min="1">
     <input type="number" id="bench" placeholder="Students per Bench" min="1">
 
@@ -39,11 +39,18 @@
 
     <p id="msg"></p>
 
+    <!-- ✅ BACK BUTTON -->
+    <button class="back-btn" onclick="goBack()">← Back to Dashboard</button>
+
 </div>
 
 <script>
 let user = localStorage.getItem("user")
 if(!user) window.location.href = "login.html"
+
+function goBack(){
+    window.location.href = "dashboard.html"
+}
 
 function deleteAllClassrooms(){
     fetch("https://exam-seating-arrangement-k7ln.onrender.com/delete-all-classrooms", {
@@ -62,7 +69,6 @@ function generateRooms(){
     let container = document.getElementById("rooms")
     let mode = document.querySelector("input[name='mode']:checked").value
 
-    // ✅ VALIDATE POSITIVE
     if(!count || count <= 0){
         alert("Enter valid classroom count ❌")
         return
@@ -77,7 +83,6 @@ function generateRooms(){
 
             <input type="text" id="name${i}" placeholder="Room Name">
 
-            <!-- ✅ ONLY POSITIVE -->
             <input type="number" id="rows${i}" placeholder="Rows" min="1">
             <input type="number" id="cols${i}" placeholder="Columns" min="1">
 
@@ -112,7 +117,6 @@ function saveDetails(){
     let msg = document.getElementById("msg")
     let mode = document.querySelector("input[name='mode']:checked").value
 
-    // ✅ VALIDATE POSITIVE
     if(!count || !bench || count <= 0 || bench <= 0){
         msg.innerText = "Enter valid positive values ❌"
         msg.style.color = "red"
@@ -126,7 +130,6 @@ function saveDetails(){
         let rows = document.getElementById("rows"+i).value
         let cols = document.getElementById("cols"+i).value
 
-        // ✅ VALIDATE POSITIVE
         if(!rows || !cols || rows <= 0 || cols <= 0){
             msg.innerText = "Rows & Columns must be > 0 ❌"
             msg.style.color = "red"
