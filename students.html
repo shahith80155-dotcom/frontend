@@ -3,188 +3,14 @@
 <head>
 <title>Upload Student List</title>
 
-<style>
-
-/* 🌌 BACKGROUND */
-body{
-    margin:0;
-    font-family: Arial;
-    color:white;
-    background: radial-gradient(circle at top left, #1a0033, #000);
-    overflow:hidden;
-}
-
-/* ⭐ STARS */
-body::before, body::after{
-    content:"";
-    position:fixed;
-    width:200%;
-    height:200%;
-    background-image:
-        radial-gradient(2px 2px at 20% 30%, white, transparent),
-        radial-gradient(2px 2px at 70% 80%, #ccc, transparent),
-        radial-gradient(2px 2px at 40% 60%, #aaa, transparent);
-    animation: moveStars 120s linear infinite;
-    z-index:-2;
-}
-body::after{
-    animation-direction: reverse;
-    opacity:0.5;
-}
-
-@keyframes moveStars{
-    from{transform: translateY(0);}
-    to{transform: translateY(-1500px);}
-}
-
-/* 🌠 SHOOTING STARS */
-.shooting-star{
-    position:fixed;
-    width:2px;
-    height:80px;
-    background:linear-gradient(-45deg, white, transparent);
-    animation:shoot 6s linear infinite;
-}
-.shooting-star:nth-child(1){ left:20%; animation-delay:2s; }
-.shooting-star:nth-child(2){ left:50%; animation-delay:5s; }
-.shooting-star:nth-child(3){ left:80%; animation-delay:8s; }
-
-@keyframes shoot{
-    0%{ transform: translateY(-100px) rotate(45deg); opacity:0;}
-    10%{ opacity:1;}
-    100%{ transform: translateY(800px) translateX(-300px) rotate(45deg); opacity:0;}
-}
-
-/* 📦 CONTAINER */
-.students-container{
-    display:flex;
-    flex-direction:column;
-    gap:14px;
-
-    background: rgba(255,255,255,0.05);
-    backdrop-filter: blur(15px);
-    padding:30px;
-    width:380px;
-    margin:auto;
-    margin-top:70px;
-    border-radius:20px;
-    box-shadow: 0 0 40px rgba(160,32,240,0.4);
-}
-
-/* HEADINGS */
-h2{
-    text-align:center;
-    color:#d9a3ff;
-    text-shadow:0 0 20px #a020f0;
-}
-
-/* INPUT + SELECT */
-input, select{
-    width:100%;
-    padding:12px;
-    border-radius:10px;
-    border:none;
-    background:rgba(255,255,255,0.08);
-    color:white;
-    outline:none;
-}
-
-/* DROPDOWN */
-select{
-    appearance:none;
-    height:45px;
-    cursor:pointer;
-}
-
-/* FILE GROUP */
-.file-upload{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:10px;
-
-    padding:10px 12px;
-    border-radius:10px;
-    background:rgba(255,255,255,0.08);
-    cursor:pointer;
-}
-
-.file-upload input{
-    display:none;
-}
-
-.btn-text{
-    background: linear-gradient(90deg,#a020f0,#ff00cc);
-    padding:6px 12px;
-    border-radius:6px;
-    color:white;
-    font-size:13px;
-    white-space:nowrap;
-}
-
-.file-name{
-    font-size:13px;
-    color:#aaa;
-    overflow:hidden;
-    white-space:nowrap;
-    text-overflow:ellipsis;
-}
-
-/* BUTTONS */
-button{
-    width:100%;
-    padding:12px;
-    border-radius:25px;
-    border:none;
-    cursor:pointer;
-    font-weight:bold;
-}
-
-/* upload */
-.upload-btn{
-    background:linear-gradient(90deg,#a020f0,#ff00cc);
-    box-shadow:0 0 20px #a020f0;
-}
-.upload-btn:hover{
-    box-shadow:0 0 30px #ff00cc;
-}
-
-/* delete */
-.delete-btn{
-    background:red;
-    color:white;
-}
-
-/* back */
-.back-btn{
-    background:#333;
-    color:#ccc;
-}
-.back-btn:hover{
-    background:#555;
-    color:white;
-}
-
-/* MESSAGE */
-#msg{
-    text-align:center;
-    font-size:14px;
-}
-
-</style>
+<link rel="stylesheet" href="student.css">
 </head>
 
 <body>
 
-<div class="shooting-star"></div>
-<div class="shooting-star"></div>
-<div class="shooting-star"></div>
-
 <div class="students-container">
 
 <h2>Upload Students 🚀</h2>
-
-<label>Regular Students</label>
 
 <select id="dept">
 <option value="">Select Department</option>
@@ -195,22 +21,20 @@ button{
 <option>CIVIL</option>
 </select>
 
+<!-- FILE -->
 <label class="file-upload">
-    <input type="file" id="regularFile" onchange="showFileName(this,'file1')">
+    <input type="file" id="regularFile" accept=".csv"
+           onchange="validateFile(this,'file1')">
     <span class="btn-text">Choose File</span>
     <span id="file1" class="file-name">No file chosen</span>
 </label>
 
-<label>Arrear students?</label>
-
 <select onchange="showArrear(this.value)">
-<option value="no">No</option>
-<option value="yes">Yes</option>
+<option value="no">No Arrear</option>
+<option value="yes">Arrear Students</option>
 </select>
 
 <div id="arrearSection" style="display:none;">
-
-<label>Arrear Students</label>
 
 <select id="arrearDept">
 <option value="">Select Department</option>
@@ -222,7 +46,8 @@ button{
 </select>
 
 <label class="file-upload">
-    <input type="file" id="arrearFile" onchange="showFileName(this,'file2')">
+    <input type="file" id="arrearFile" accept=".csv"
+           onchange="validateFile(this,'file2')">
     <span class="btn-text">Choose File</span>
     <span id="file2" class="file-name">No file chosen</span>
 </label>
@@ -233,29 +58,60 @@ button{
 
 <button class="delete-btn" onclick="deleteAllStudents()">Delete All Students</button>
 
+<button class="sample-btn" onclick="showSample()">View Sample Format</button>
+
 <p id="msg"></p>
 
 <button class="back-btn" onclick="goBack()">← Back to Dashboard</button>
 
 </div>
 
+<!-- 🔥 SAMPLE POPUP -->
+<div id="sampleBox" class="sample-box">
+    <div class="sample-content">
+        <h3>Sample CSV Format</h3>
+
+<pre>
+name,regno,subject,dept,type
+Arun Kumar,1001,CS101,CSE,regular
+Sneha Reddy,1002,CS102,CSE,regular
+Kiran Kumar,1003,CS103,CSE,regular
+</pre>
+
+        <button onclick="closeSample()">Close</button>
+    </div>
+</div>
+
 <script>
 
-let user = localStorage.getItem("user")
-if(!user){
-    window.location.href = "/dashboard.html"
-}
+/* VALIDATE CSV */
+function validateFile(input,id){
+    let file = input.files[0]
 
-/* FILE NAME */
-function showFileName(input,id){
-    let name = input.files[0]?.name || "No file chosen"
-    document.getElementById(id).innerText = name
+    if(file){
+        if(!file.name.endsWith(".csv")){
+            alert("Only CSV files allowed ❌")
+            input.value=""
+            document.getElementById(id).innerText="No file chosen"
+            return
+        }
+        document.getElementById(id).innerText=file.name
+    }
 }
 
 /* SHOW ARREAR */
 function showArrear(val){
     document.getElementById("arrearSection").style.display =
         val==="yes" ? "block":"none"
+}
+
+/* SAMPLE POPUP */
+function showSample(){
+    document.getElementById("sampleBox").style.display="flex"
+}
+
+function closeSample(){
+    document.getElementById("sampleBox").style.display="none"
 }
 
 /* DELETE */
@@ -265,7 +121,7 @@ function deleteAllStudents(){
     })
     .then(res=>res.text())
     .then(msg=>{
-        document.getElementById("msg").innerText = msg
+        document.getElementById("msg").innerText=msg
         setTimeout(()=>location.reload(),1000)
     })
 }
@@ -273,11 +129,9 @@ function deleteAllStudents(){
 /* UPLOAD */
 function uploadStudents(){
 
-let dept = document.getElementById("dept").value
-let file = document.getElementById("regularFile").files[0]
-let arrearFile = document.getElementById("arrearFile").files[0]
-let arrearDept = document.getElementById("arrearDept").value
-let msg = document.getElementById("msg")
+let dept=document.getElementById("dept").value
+let file=document.getElementById("regularFile").files[0]
+let msg=document.getElementById("msg")
 
 if(dept==="" || !file){
     msg.innerText="Select department & file ❌"
@@ -285,14 +139,9 @@ if(dept==="" || !file){
     return
 }
 
-let formData = new FormData()
+let formData=new FormData()
 formData.append("dept",dept)
 formData.append("regularFile",file)
-
-if(arrearFile){
-    formData.append("arrearFile",arrearFile)
-    formData.append("arrearDept",arrearDept)
-}
 
 fetch("https://exam-seating-arrangement-k7ln.onrender.com/upload-students",{
     method:"POST",
@@ -307,7 +156,6 @@ fetch("https://exam-seating-arrangement-k7ln.onrender.com/upload-students",{
     msg.innerText="Upload failed ❌"
     msg.style.color="red"
 })
-
 }
 
 /* BACK */
