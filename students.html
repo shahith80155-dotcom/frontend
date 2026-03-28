@@ -5,16 +5,13 @@
 
 <style>
 
-/* 🌌 BODY */
+/* 🌌 BACKGROUND */
 body{
     margin:0;
     font-family: Arial;
-    background: radial-gradient(circle at top left, #1a0033, #000);
     color:white;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    min-height:100vh;
+    background: radial-gradient(circle at top left, #1a0033, #000);
+    overflow:hidden;
 }
 
 /* ⭐ STARS */
@@ -23,95 +20,115 @@ body::before, body::after{
     position:fixed;
     width:200%;
     height:200%;
-    z-index:-1;
-}
-
-body::before{
     background-image:
-        radial-gradient(1px 1px at 20% 30%, white, transparent),
-        radial-gradient(1px 1px at 70% 80%, #ccc, transparent),
-        radial-gradient(1px 1px at 50% 50%, #aaa, transparent);
-    animation: moveStars 200s linear infinite;
+        radial-gradient(2px 2px at 20% 30%, white, transparent),
+        radial-gradient(2px 2px at 70% 80%, #ccc, transparent),
+        radial-gradient(2px 2px at 40% 60%, #aaa, transparent);
+    animation: moveStars 120s linear infinite;
+    z-index:-2;
 }
-
 body::after{
-    background-image:
-        radial-gradient(2px 2px at 40% 60%, white, transparent),
-        radial-gradient(2px 2px at 80% 20%, #aaa, transparent);
-    animation: moveStars 120s linear infinite reverse;
+    animation-direction: reverse;
+    opacity:0.5;
 }
 
 @keyframes moveStars{
-    from{ transform: translateY(0); }
-    to{ transform: translateY(-1500px); }
+    from{transform: translateY(0);}
+    to{transform: translateY(-1500px);}
 }
 
 /* 🌠 SHOOTING STARS */
 .shooting-star{
-    position: fixed;
-    width: 2px;
-    height: 80px;
-    background: linear-gradient(white, transparent);
-    top: -100px;
-    opacity: 0;
-    animation: shoot 6s linear infinite;
+    position:fixed;
+    width:2px;
+    height:80px;
+    background:linear-gradient(-45deg, white, transparent);
+    animation:shoot 6s linear infinite;
 }
-
 .shooting-star:nth-child(1){ left:20%; animation-delay:2s; }
 .shooting-star:nth-child(2){ left:50%; animation-delay:5s; }
 .shooting-star:nth-child(3){ left:80%; animation-delay:8s; }
 
-@keyframes shoot {
-    0% { transform: translate(0,0) rotate(45deg); opacity:0; }
-    10% { opacity:1; }
-    100% { transform: translate(-300px,800px) rotate(45deg); opacity:0; }
+@keyframes shoot{
+    0%{ transform: translateY(-100px) translateX(0) rotate(45deg); opacity:0;}
+    10%{ opacity:1;}
+    100%{ transform: translateY(800px) translateX(-300px) rotate(45deg); opacity:0;}
 }
 
-/* ✨ GLASS CARD */
+/* 📦 CONTAINER */
 .students-container{
     background: rgba(255,255,255,0.05);
     backdrop-filter: blur(15px);
-    padding:35px;
+    padding:30px;
     width:380px;
+    margin:auto;
+    margin-top:60px;
     border-radius:20px;
-
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    gap:15px;
-
-    box-shadow:
-        0 0 40px rgba(160,32,240,0.4),
-        inset 0 0 10px rgba(255,255,255,0.05);
+    box-shadow: 0 0 40px rgba(160,32,240,0.4);
+    text-align:center;
 }
 
-/* TITLES */
+/* HEADINGS */
 h2{
-    margin:0;
-    color:#e0b3ff;
-    text-shadow:0 0 20px rgba(160,32,240,0.8);
+    color:#d9a3ff;
+    text-shadow:0 0 20px #a020f0;
 }
 
-h3{
-    margin:5px 0;
-    color:#bbb;
-}
-
-/* INPUTS */
+/* INPUT + SELECT */
 input, select{
     width:100%;
-    padding:10px;
+    padding:12px;
+    margin:10px 0;
     border-radius:10px;
     border:none;
-    outline:none;
-    background: rgba(255,255,255,0.08);
+    background:rgba(255,255,255,0.08);
     color:white;
+    outline:none;
 }
 
-/* LABEL */
-label{
-    font-size:14px;
-    color:#ccc;
+/* SELECT CUSTOM */
+select{
+    appearance:none;
+    cursor:pointer;
+    background-image: linear-gradient(45deg, transparent 50%, #a020f0 50%),
+                      linear-gradient(135deg, #a020f0 50%, transparent 50%);
+    background-position: calc(100% - 20px) calc(1em),
+                         calc(100% - 15px) calc(1em);
+    background-size: 5px 5px;
+    background-repeat: no-repeat;
+}
+
+/* FILE INPUT */
+input[type="file"]{
+    display:none;
+}
+
+.file-upload{
+    width:100%;
+    padding:12px;
+    border-radius:10px;
+    background:rgba(255,255,255,0.08);
+    cursor:pointer;
+    text-align:left;
+}
+
+.file-upload:hover{
+    box-shadow:0 0 10px #a020f0;
+}
+
+.file-upload::before{
+    content:"Choose File";
+    background:#a020f0;
+    padding:5px 12px;
+    border-radius:6px;
+    color:white;
+    margin-right:10px;
+}
+
+.file-name{
+    font-size:13px;
+    color:#aaa;
+    margin-left:10px;
 }
 
 /* BUTTONS */
@@ -120,48 +137,44 @@ button{
     padding:12px;
     border-radius:25px;
     border:none;
-    background: linear-gradient(90deg,#a020f0,#ff00cc);
-    color:white;
-    font-weight:bold;
+    margin-top:15px;
     cursor:pointer;
-    box-shadow:0 0 15px #a020f0;
-    transition:0.3s;
+    font-weight:bold;
 }
 
-button:hover{
-    transform:scale(1.05);
-    box-shadow:0 0 25px #ff00cc;
+/* upload */
+.upload-btn{
+    background:linear-gradient(90deg,#a020f0,#ff00cc);
+    color:white;
+    box-shadow:0 0 20px #a020f0;
+}
+.upload-btn:hover{
+    box-shadow:0 0 30px #ff00cc;
 }
 
-/* DELETE BUTTON */
+/* delete */
 .delete-btn{
     background:red;
-}
-
-/* BACK BUTTON */
-.back-btn{
-    width:100%;
-    text-align:center;
-    padding:10px;
-    border-radius:20px;
-    background:#333;
     color:white;
-    text-decoration:none;
-    margin-top:5px;
-    transition:0.3s;
 }
 
+/* back button */
+.back-btn{
+    margin-top:20px;
+    background:#333;
+    color:#ccc;
+}
 .back-btn:hover{
     background:#555;
+    color:white;
 }
 
 /* MESSAGE */
 #msg{
-    font-size:14px;
+    margin-top:10px;
 }
 
 </style>
-
 </head>
 
 <body>
@@ -185,7 +198,12 @@ button:hover{
 <option>CIVIL</option>
 </select>
 
-<input type="file" id="regularFile" accept=".csv">
+<label class="file-upload">
+    <input type="file" id="regularFile" onchange="showFileName(this,'file1')">
+    <span id="file1" class="file-name">No file chosen</span>
+</label>
+
+<br>
 
 <label>Arrear students?</label>
 
@@ -194,7 +212,7 @@ button:hover{
 <option value="yes">Yes</option>
 </select>
 
-<div id="arrearSection" style="display:none; width:100%;">
+<div id="arrearSection" style="display:none;">
 
 <h3>Arrear Students</h3>
 
@@ -203,23 +221,24 @@ button:hover{
 <option>CSE</option>
 <option>ECE</option>
 <option>IT</option>
-<option>CIVIL</option>
 <option>MECH</option>
+<option>CIVIL</option>
 </select>
 
-<input type="file" id="arrearFile" accept=".csv">
+<label class="file-upload">
+    <input type="file" id="arrearFile" onchange="showFileName(this,'file2')">
+    <span id="file2" class="file-name">No file chosen</span>
+</label>
 
 </div>
 
-<button onclick="uploadStudents()">Upload Students</button>
+<button class="upload-btn" onclick="uploadStudents()">Upload Students</button>
 
-<button class="delete-btn" onclick="deleteAllStudents()">
-Delete All Students
-</button>
+<button class="delete-btn" onclick="deleteAllStudents()">Delete All Students</button>
 
 <p id="msg"></p>
 
-<a href="dashboard.html" class="back-btn">⬅ Back to Dashboard</a>
+<button class="back-btn" onclick="goBack()">← Back to Dashboard</button>
 
 </div>
 
@@ -230,22 +249,31 @@ if(!user){
     window.location.href = "/dashboard.html"
 }
 
-function deleteAllStudents(){
-    fetch("https://exam-seating-arrangement-k7ln.onrender.com/delete-all-students", {
-        method: "DELETE"
-    })
-    .then(res => res.text())
-    .then(msg => {
-        document.getElementById("msg").innerText = msg
-        setTimeout(() => location.reload(), 1000)
-    })
+/* FILE NAME SHOW */
+function showFileName(input,id){
+    let name = input.files[0]?.name || "No file chosen"
+    document.getElementById(id).innerText = name
 }
 
-function showArrear(value){
+/* SHOW ARREAR */
+function showArrear(val){
     document.getElementById("arrearSection").style.display =
-        (value === "yes") ? "block" : "none"
+        val==="yes" ? "block":"none"
 }
 
+/* DELETE */
+function deleteAllStudents(){
+    fetch("https://exam-seating-arrangement-k7ln.onrender.com/delete-all-students",{
+        method:"DELETE"
+    })
+    .then(res=>res.text())
+    .then(msg=>{
+        document.getElementById("msg").innerText = msg
+        setTimeout(()=>location.reload(),1000)
+    })
+}
+
+/* UPLOAD */
 function uploadStudents(){
 
 let dept = document.getElementById("dept").value
@@ -254,35 +282,40 @@ let arrearFile = document.getElementById("arrearFile").files[0]
 let arrearDept = document.getElementById("arrearDept").value
 let msg = document.getElementById("msg")
 
-if(dept === "" || !file){
-    msg.innerText = "Select department & file ❌"
-    msg.style.color = "red"
+if(dept==="" || !file){
+    msg.innerText="Select department & file ❌"
+    msg.style.color="red"
     return
 }
 
 let formData = new FormData()
-formData.append("dept", dept)
-formData.append("regularFile", file)
+formData.append("dept",dept)
+formData.append("regularFile",file)
 
 if(arrearFile){
-    formData.append("arrearFile", arrearFile)
-    formData.append("arrearDept", arrearDept)
+    formData.append("arrearFile",arrearFile)
+    formData.append("arrearDept",arrearDept)
 }
 
 fetch("https://exam-seating-arrangement-k7ln.onrender.com/upload-students",{
     method:"POST",
-    body: formData
+    body:formData
 })
 .then(res=>res.text())
 .then(data=>{
-    msg.innerText = data
-    msg.style.color = "green"
+    msg.innerText=data
+    msg.style.color="green"
 })
 .catch(()=>{
-    msg.innerText = "Upload failed ❌"
-    msg.style.color = "red"
+    msg.innerText="Upload failed ❌"
+    msg.style.color="red"
 })
 
+}
+
+/* BACK */
+function goBack(){
+    window.location.href="dashboard.html"
 }
 
 </script>
