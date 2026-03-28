@@ -25,25 +25,33 @@
     </label>
 
     <!-- Extra Inputs -->
-    <div id="extraInputs" class="extra-box">
-        <input type="number" id="extraRows" placeholder="Rows" min="1" step="1">
-        <input type="number" id="extraCols" placeholder="Columns" min="1" step="1">
-        <input type="number" id="extraBench" value="1" placeholder="Bench" min="1" step="1">
+    <div id="extraInputs" class="extra-box" style="display:none;">
+        <input type="number" id="extraRows" placeholder="Rows" min="1">
+        <input type="number" id="extraCols" placeholder="Columns" min="1">
+        <input type="number" id="extraBench" placeholder="Bench" value="1" min="1">
     </div>
 
+    <!-- Buttons -->
     <button onclick="generateSeating()">Generate Seating</button>
+    <button onclick="goToView()" class="view-btn">View Seating</button>
+
+    <p id="msg"></p>
 
 </div>
 
 <script>
+
+// ✅ SHOW / HIDE EXTRA INPUTS
 document.getElementById("extraRoom").addEventListener("change", function () {
     let box = document.getElementById("extraInputs")
     box.style.display = this.checked ? "flex" : "none"
 })
 
+// ✅ GENERATE FUNCTION
 function generateSeating() {
 
     let allowExtra = document.getElementById("extraRoom").checked
+    let msg = document.getElementById("msg")
 
     let url = "https://exam-seating-arrangement-k7ln.onrender.com/generate-seating?extra=" + allowExtra
 
@@ -53,28 +61,45 @@ function generateSeating() {
         let cols = document.getElementById("extraCols").value
         let bench = document.getElementById("extraBench").value || 1
 
-        // ✅ STRICT VALIDATION
         if (!rows || !cols) {
-            alert("Enter rows and columns ❌")
+            msg.innerText = "Enter rows and columns ❌"
+            msg.style.color = "red"
             return
         }
 
         if (rows <= 0 || cols <= 0 || bench <= 0) {
-            alert("Values must be greater than 0 ❌")
+            msg.innerText = "Values must be greater than 0 ❌"
+            msg.style.color = "red"
             return
         }
 
         url += `&rows=${rows}&cols=${cols}&bench=${bench}`
     }
 
+    msg.innerText = "Generating seating..."
+    msg.style.color = "white"
+
     fetch(url)
     .then(res => res.json())
     .then(data => {
+
         localStorage.clear()
         localStorage.setItem("seating", JSON.stringify(data))
-        window.location.href = "view.html"
+
+        msg.innerText = "Seating generated successfully ✅"
+        msg.style.color = "lightgreen"
+    })
+    .catch(() => {
+        msg.innerText = "Error generating seating ❌"
+        msg.style.color = "red"
     })
 }
+
+// ✅ VIEW PAGE NAVIGATION
+function goToView(){
+    window.location.href = "view.html"
+}
+
 </script>
 
 </body>
