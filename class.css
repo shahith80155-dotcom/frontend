@@ -30,29 +30,47 @@ body::after {
 }
 
 /* ⭐ DOWNWARD ONLY */
-@keyframes moveStars {
-    from { transform: translateY(0); }
-    to { transform: translateY(1200px); }
-}
-
-/* 🚀 SHOOTING STAR */
-.shooting-stars::before {
-    content: "";
+.shooting-star {
     position: fixed;
-    top: -100px;
-    left: 70%;
     width: 2px;
-    height: 100px;
-    background: linear-gradient(white, transparent);
+    height: 80px;
+    background: linear-gradient(-45deg, white, transparent);
+    top: -100px;
+    left: random;
+    opacity: 0;
     animation: shoot 6s linear infinite;
 }
 
+/* multiple shooting stars */
+.shooting-star:nth-child(1) { left: 20%; animation-delay: 2s; }
+.shooting-star:nth-child(2) { left: 50%; animation-delay: 5s; }
+.shooting-star:nth-child(3) { left: 80%; animation-delay: 8s; }
+
 @keyframes shoot {
-    0% { transform: translateY(-100px) rotate(45deg); opacity: 0; }
-    10% { opacity: 1; }
-    100% { transform: translateY(800px) rotate(45deg); opacity: 0; }
+    0% {
+        transform: translateY(0) translateX(0) rotate(45deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(800px) translateX(-300px) rotate(45deg);
+        opacity: 0;
+    }
 }
 
+/* ✨ TWINKLE */
+@keyframes twinkle {
+    0%, 100% { opacity: 0.8; }
+    50% { opacity: 0.3; }
+}
+
+/* 🌠 STAR MOVEMENT */
+@keyframes moveStars {
+    from { transform: translateY(0); }
+    to { transform: translateY(-1500px); }
+}
 /* 📦 CONTAINER */
 .classroom-container {
     max-width: 420px;
