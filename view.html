@@ -56,13 +56,13 @@ else {
 
                     if(s === "Empty") return "Empty"
 
-                    let parts = s.split("\n")
+                    // ✅ EXTRACT SUBJECT FROM "Sub: CS101"
+                    let match = s.match(/Sub:\s*(\w+)/)
 
-                    // ✅ FIXED SUBJECT INDEX
-                    let subject = parts[2] || parts[3] || "Unknown"
-
-                    // COUNT SUBJECT
-                    subjectCount[subject] = (subjectCount[subject] || 0) + 1
+                    if(match){
+                        let subject = match[1]
+                        subjectCount[subject] = (subjectCount[subject] || 0) + 1
+                    }
 
                     return s.replace(/\n/g, "<br>")
 
@@ -74,21 +74,21 @@ else {
             container.appendChild(rowDiv)
         })
 
-        // ✅ SUBJECT SUMMARY DISPLAY
-        let summaryTitle = document.createElement("h3")
-        summaryTitle.innerText = "📊 Subject Count"
-        container.appendChild(summaryTitle)
+        // ✅ DISPLAY SUBJECT COUNT
+        let box = document.createElement("div")
+        box.className = "subject-box"
 
-        let summaryBox = document.createElement("div")
-        summaryBox.className = "subject-summary"
+        let heading = document.createElement("h3")
+        heading.innerText = "📊 Subject Count"
+        box.appendChild(heading)
 
         for(let sub in subjectCount){
             let p = document.createElement("p")
             p.innerText = sub + " → " + subjectCount[sub]
-            summaryBox.appendChild(p)
+            box.appendChild(p)
         }
 
-        container.appendChild(summaryBox)
+        container.appendChild(box)
     })
 
     // UNSEATED
