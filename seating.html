@@ -7,90 +7,92 @@
 
 <body>
 
-<!-- 🌠 Shooting Stars -->
-<div class="shooting-star"></div>
-<div class="shooting-star"></div>
-<div class="shooting-star"></div>
-
 <div class="container">
 
     <h1>Generate Seating ⚙️</h1>
-    <p class="subtitle">Create seating arrangement easily</p>
+    <p>Create seating arrangement easily</p>
 
     <!-- EXTRA ROOM -->
-    <label class="checkbox-container">
+    <label>
         <input type="checkbox" id="extraRoom">
-        <span class="checkmark"></span>
-        <span class="label-text">Add Extra Room</span>
+        Add Extra Room
     </label>
 
-    <!-- STRICT MODE -->
-    <label class="checkbox-container">
-        <input type="checkbox" id="strictMode">
-        <span class="checkmark"></span>
-        <span class="label-text">Strict Mode (No same subject adjacent)</span>
-    </label>
+    <!-- MODE SELECTION (RADIO BUTTONS ✅) -->
+    <div style="margin-top:15px; text-align:left;">
+        <p><b>Select Mode:</b></p>
 
-    <!-- INFO TEXT (NO WARNING POPUP NOW) -->
+        <label>
+            <input type="radio" name="mode" value="normal" checked>
+            Normal Mode
+        </label>
+        <br>
+
+        <label>
+            <input type="radio" name="mode" value="strict">
+            Strict Mode
+        </label>
+    </div>
+
+    <!-- INFO -->
     <p style="font-size:12px;color:gray;">
-        ✔ Strict mode → No same subject adjacent <br>
-        ✔ Normal mode → Same subject may sit together
+        ✔ Normal → same subject may sit together <br>
+        ✔ Strict → no same subject adjacent
     </p>
 
-    <!-- Extra Inputs -->
-    <div id="extraInputs" class="extra-box" style="display:none;">
+    <!-- EXTRA INPUTS -->
+    <div id="extraInputs" style="display:none; margin-top:10px;">
         <input type="number" id="extraRows" placeholder="Rows" min="1">
         <input type="number" id="extraCols" placeholder="Columns" min="1">
         <input type="number" id="extraBench" placeholder="Bench" value="1" min="1">
     </div>
 
-    <!-- Buttons -->
+    <br>
+
     <button onclick="generateSeating()">Generate Seating</button>
-    <button onclick="goToView()" class="view-btn">View Seating</button>
+    <button onclick="goToView()">View Seating</button>
 
     <p id="msg"></p>
-
-    <!-- BACK BUTTON -->
-    <button class="back-btn" onclick="goDashboard()">← Back to Dashboard</button>
 
 </div>
 
 <script>
 
-// 🔐 Protect page
+// 🔐 protect page
 let user = localStorage.getItem("user")
 if(!user) window.location.href = "login.html"
 
-// SHOW / HIDE EXTRA INPUTS
+// toggle extra inputs
 document.getElementById("extraRoom").addEventListener("change", function () {
-    let box = document.getElementById("extraInputs")
-    box.style.display = this.checked ? "flex" : "none"
+    document.getElementById("extraInputs").style.display =
+        this.checked ? "block" : "none"
 })
 
 // GENERATE FUNCTION
-function generateSeating() {
+function generateSeating(){
 
     let allowExtra = document.getElementById("extraRoom").checked
-    let strictMode = document.getElementById("strictMode").checked
+    let mode = document.querySelector('input[name="mode"]:checked').value
+    let strictMode = mode === "strict"
+
     let msg = document.getElementById("msg")
 
-    // API URL
     let url = `https://exam-seating-arrangement-k7ln.onrender.com/generate-seating?extra=${allowExtra}&strict=${strictMode}`
 
     // EXTRA ROOM VALIDATION
-    if (allowExtra) {
+    if(allowExtra){
 
         let rows = document.getElementById("extraRows").value
         let cols = document.getElementById("extraCols").value
         let bench = document.getElementById("extraBench").value || 1
 
-        if (!rows || !cols) {
-            msg.innerText = "Enter rows and columns ❌"
+        if(!rows || !cols){
+            msg.innerText = "Enter rows & columns ❌"
             msg.style.color = "red"
             return
         }
 
-        if (rows <= 0 || cols <= 0 || bench <= 0) {
+        if(rows <= 0 || cols <= 0 || bench <= 0){
             msg.innerText = "Values must be greater than 0 ❌"
             msg.style.color = "red"
             return
@@ -106,19 +108,18 @@ function generateSeating() {
     .then(res => res.json())
     .then(data => {
 
-        localStorage.removeItem("seating")
         localStorage.setItem("seating", JSON.stringify(data))
 
-        // ✅ CLEAN MODE MESSAGE (NO WARNING POPUP)
+        // MODE MESSAGE
         if(data.mode === "STRICT"){
             msg.innerText = "Strict mode applied (no same subject adjacent)"
             msg.style.color = "orange"
         }else{
-            msg.innerText = "Normal mode applied (same subject may sit adjacent)"
+            msg.innerText = "Normal mode applied (same subject may sit together)"
             msg.style.color = "lightblue"
         }
     })
-    .catch(() => {
+    .catch(()=>{
         msg.innerText = "Error generating seating ❌"
         msg.style.color = "red"
     })
@@ -127,11 +128,6 @@ function generateSeating() {
 // VIEW PAGE
 function goToView(){
     window.location.href = "view.html"
-}
-
-// BACK TO DASHBOARD
-function goDashboard(){
-    window.location.href = "/dashboard.html"
 }
 
 </script>
