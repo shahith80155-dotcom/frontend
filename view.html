@@ -39,6 +39,9 @@ else {
         title.innerText = "Room " + room.room
         container.appendChild(title)
 
+        // ✅ SUBJECT COUNTER
+        let subjectCount = {}
+
         room.layout.forEach(row => {
 
             let rowDiv = document.createElement("div")
@@ -49,17 +52,45 @@ else {
                 let benchDiv = document.createElement("div")
                 benchDiv.className = "bench"
 
-                benchDiv.innerHTML = col.map(s =>
-                    s === "Empty"
-                    ? "Empty"
-                    : s.replace(/\n/g, "<br>")
-                ).join("<hr>")
+                benchDiv.innerHTML = col.map(s => {
+
+                    if(s === "Empty") return "Empty"
+
+                    let parts = s.split("\n")
+                    let subject = parts[2]   // ✅ subject code
+
+                    // COUNT SUBJECT
+                    if(subjectCount[subject]){
+                        subjectCount[subject]++
+                    } else {
+                        subjectCount[subject] = 1
+                    }
+
+                    return s.replace(/\n/g, "<br>")
+
+                }).join("<hr>")
 
                 rowDiv.appendChild(benchDiv)
             })
 
             container.appendChild(rowDiv)
         })
+
+        // ✅ SUBJECT SUMMARY DISPLAY
+        let summaryTitle = document.createElement("h3")
+        summaryTitle.innerText = "📊 Subject Count"
+        container.appendChild(summaryTitle)
+
+        let summaryBox = document.createElement("div")
+        summaryBox.className = "subject-summary"
+
+        for(let sub in subjectCount){
+            let p = document.createElement("p")
+            p.innerText = sub + " → " + subjectCount[sub]
+            summaryBox.appendChild(p)
+        }
+
+        container.appendChild(summaryBox)
     })
 
     // UNSEATED
