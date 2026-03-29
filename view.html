@@ -57,14 +57,12 @@ else {
                     if(s === "Empty") return "Empty"
 
                     let parts = s.split("\n")
-                    let subject = parts[2]   // ✅ subject code
+
+                    // ✅ FIXED SUBJECT INDEX
+                    let subject = parts[2] || parts[3] || "Unknown"
 
                     // COUNT SUBJECT
-                    if(subjectCount[subject]){
-                        subjectCount[subject]++
-                    } else {
-                        subjectCount[subject] = 1
-                    }
+                    subjectCount[subject] = (subjectCount[subject] || 0) + 1
 
                     return s.replace(/\n/g, "<br>")
 
