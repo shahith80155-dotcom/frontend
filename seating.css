@@ -10,6 +10,17 @@ body {
     height: 100vh;
 }
 
+/* REMOVE NUMBER ARROWS */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
 /* CONTAINER */
 .container {
     width: 95%;
@@ -49,7 +60,6 @@ h1 {
 }
 
 .mode-title {
-    margin-bottom: 8px;
     font-size: 13px;
     color: #aaa;
 }
@@ -76,21 +86,27 @@ h1 {
 .room-card {
     background: rgba(255,255,255,0.05);
     padding: 10px;
-    border-radius: 10px;
-
+    border-radius: 12px;
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 8px;
 }
 
 /* INPUT */
 input {
-    padding: 8px;
-    border-radius: 8px;
-    border: none;
-    background: rgba(255,255,255,0.1);
+    padding: 12px;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.15);
+    outline: none;
+    background: rgba(255,255,255,0.08);
     color: white;
     text-align: center;
+    transition: 0.2s;
+}
+
+input:focus {
+    border: 1px solid #a020f0;
+    box-shadow: 0 0 10px #a020f0;
 }
 
 /* BUTTON */
